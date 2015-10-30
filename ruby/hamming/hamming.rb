@@ -5,11 +5,8 @@ class Hamming
     if strand1.length != strand2.length
       raise ArgumentError.new("unequal strand lengths")
     end
-    offset = 0
-    strand2 = strand2.split("")
-    strand1.split("").each.with_index do |n, i|
-      offset += 1 if n != strand2[i]
-    end
-    return offset
+    diff = 0
+    strand1.each_char.with_index { |c, i| diff += 1 if c != strand2[i] }
+    return diff
   end
 end

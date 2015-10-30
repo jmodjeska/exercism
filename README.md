@@ -1,2 +1,2 @@
 # exercism
-Practice exercises from exercism.io
+Practice exercises for [exercism.io](http://exercism.io/jmodjeska)

@@ -19,23 +19,27 @@ class FoodChain
   }
 
   def self.song
-    [].tap { |verse| 1.upto(BEASTS.max[0]) do |i|
-      verse << start_verse(i)
-      i == BEASTS.max[0] ? verse << '' : verse << build_verse(i)
-    end }.join("\n").gsub(/\n{3}/, "\n\n")
+    [].tap do |verse|
+      1.upto(BEASTS.max[0]) do |i|
+        verse << start_verse(i)
+        verse << ( i == BEASTS.max[0] ? '' : build_verse(i) )
+      end
+    end.join("\n").gsub(/\n{3}/, "\n\n")
   end
 
   def self.start_verse(n)
-    b = n == 2 ? "#{BEASTS[n][1].gsub('that', 'It')}" : "#{BEASTS[n][1]}"
+    b = ( n == 2 ? BEASTS[n][1].gsub('that', 'It') : BEASTS[n][1] )
     "#{SONGPARTS[:a]} #{BEASTS[n][0]}.\n#{b}"
   end
 
   def self.build_verse(n)
-    [].tap { |verse| n.downto(2) do |i|
-      str  = "#{SONGPARTS[:b]} #{BEASTS[i][0]} #{SONGPARTS[:c]} " if i > 1
-      str += "#{BEASTS[i - 1][0]}"
-      str += ( i == 3 ? " #{BEASTS[i - 1][1]}" : "." )
-      verse << str; verse << BEASTS[1][1] if i == 2
-    end }.join("\n")
+    [].tap do |build|
+      n.downto(2) do |i|
+        str  = "#{SONGPARTS[:b]} #{BEASTS[i][0]} #{SONGPARTS[:c]} " if i > 1
+        str += BEASTS[i - 1][0].to_s
+        str += ( i == 3 ? " #{BEASTS[i - 1][1]}" : '.' )
+        build << str; build << BEASTS[1][1] if i == 2
+      end
+    end.join("\n")
   end
 end
